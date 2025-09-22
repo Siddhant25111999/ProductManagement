@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/header', { title: 'Products' }) %>
+
+<body id="page-top">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <%- include('../layouts/sidebar') %>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+
+            <!-- Topbar -->
+            <%- include('../layouts/navbar') %>
+
+            <!-- Main Content -->
+            <div class="container mt-4">
+
+                <h1 class="mb-4">All Products</h1>
+
+                <!-- Flash Messages -->
+                <% if(success.length) { %>
+                    <div class="alert alert-success"><%= success %></div>
+                <% } %>
+                <% if(error.length) { %>
+                    <div class="alert alert-danger"><%= error %></div>
+                <% } %>
+
+                <!-- Add Product Button -->
+                <div class="mb-4">
+                    <a href="/admin/products/add" class="btn btn-primary">Add New Product</a>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="row">
+                    <% if(products.length === 0) { %>
+                        <div class="col-12">
+                            <p>No products found.</p>
+                        </div>
+                    <% } %>
+
+                    <% products.forEach(product => { %>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <% if(product.image) { %>
+                                    <img src="/uploads/<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
+                                <% } %>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= product.name %></h5>
+                                    <p class="card-text">Category: <%= product.category.name %></p>
+                                    <a href="/admin/products/edit/<%= product._id %>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="/admin/products/delete/<%= product._id %>" class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Delete this product?')">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content -->
+
+        <!-- Footer -->
+        <%- include('../layouts/footer') %>
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+</body>
+</html>

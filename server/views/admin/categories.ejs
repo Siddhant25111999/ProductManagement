@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../layouts/header', { title: 'Categories' }) %> <!-- Pass title -->
+
+<body id="page-top">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <%- include('../layouts/sidebar') %>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+
+            <!-- Topbar -->
+            <%- include('../layouts/navbar') %>
+
+            <!-- Main Content -->
+            <div class="container mt-4">
+
+                <h1 class="mb-4">All Categories</h1>
+
+                <!-- Flash Messages -->
+                <% if(success.length) { %>
+                    <div class="alert alert-success"><%= success %></div>
+                <% } %>
+                <% if(error.length) { %>
+                    <div class="alert alert-danger"><%= error %></div>
+                <% } %>
+
+                <!-- Add Category Button -->
+                <div class="mb-4">
+                    <a href="/admin/categories/add" class="btn btn-primary">Add New Category</a>
+                </div>
+
+                <!-- Categories Grid -->
+                <div class="row">
+                    <% if(categories.length === 0) { %>
+                        <div class="col-12">
+                            <p>No categories found.</p>
+                        </div>
+                    <% } %>
+
+                    <% categories.forEach(category => { %>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= category.name %></h5>
+                                    <p class="card-text">Slug: <%= category.slug %></p>
+                                    <a href="/admin/categories/edit/<%= category._id %>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="/admin/categories/delete/<%= category._id %>" class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Delete this category?')">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content -->
+
+        <!-- Footer -->
+        <%- include('../layouts/footer') %>
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+</body>
+</html>

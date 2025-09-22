@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/header') %>
+
+<body>
+<%- include('../layouts/navbar') %>
+
+<div class="container mt-4">
+
+    <h1 class="mb-4">All Products</h1>
+
+    <!-- Search Form -->
+    <form method="GET" action="/" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="search" class="form-control" placeholder="Search by name or description" value="<%= search || '' %>">
+            </div>
+            <div class="col-md-4">
+                <select name="category" class="form-control">
+                    <option value="">All Categories</option>
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat._id %>" <%= selectedCategory == cat._id ? 'selected' : '' %>><%= cat.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Products Grid -->
+    <div class="row">
+        <% if(products.length === 0) { %>
+            <div class="col-12">
+                <p>No products found.</p>
+            </div>
+        <% } %>
+
+        <% products.forEach(product => { %>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <% if(product.image) { %>
+                        <img src="/uploads/<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= product.name %></h5>
+                        <p class="card-text"><%= product.category.name %></p>
+                        <a href="/product/<%= product.slug %>" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+</div>
+
+<%- include('../layouts/footer') %>
+</body>
+</html>
